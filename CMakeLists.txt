@@ -11,7 +11,6 @@ set(srcs
 		"./src/platforms.cpp"
 		"./src/power_mgt.cpp"
 		"./src/wiring.cpp"
-# remove the following if you want I2S instead of RMT hardware, just put a pound in front
 		"./src/platforms/esp/32/clockless_rmt_esp32.cpp"
 		)
 

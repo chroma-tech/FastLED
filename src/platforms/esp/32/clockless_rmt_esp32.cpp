@@ -30,7 +30,8 @@ static intr_handle_t gRMT_intr_handle = NULL;
 static xSemaphoreHandle gTX_sem = NULL;
 
 // -- Make sure we can't call show() too quickly
-CMinWait<50>   gWait;
+// Note: ws2813/ws2815 needs >280uS for reset
+CMinWait<300>   gWait;
 
 static bool gInitialized = false;
 
@@ -103,7 +104,7 @@ void ESP32RMTController::init(gpio_num_t pin)
         gOnChannel[i] = NULL;
 
         // -- RMT configuration for transmission
-        rmt_config_t rmt_tx;
+        rmt_config_t rmt_tx = RMT_DEFAULT_CONFIG_TX(gpio_num_t(0), rmt_channel_t(i));
         rmt_tx.channel = rmt_channel_t(i);
         rmt_tx.rmt_mode = RMT_MODE_TX;
         rmt_tx.gpio_num = pin;
